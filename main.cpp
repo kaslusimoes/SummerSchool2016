@@ -1,14 +1,18 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-#define N 5
-#define M 6
-#define MAX N+M+1
-#define MAX_EDGE 15
-#define MAX_DEG 3
+typedef long long int ll;
+const ll N = 10,
+ M = 6,
+ MAX = N + M + 1,
+ MAX_EDGE = 15,
+ MAX_DEG = 3,
+ ITERATIONS = 10000,
+ GENERATIONS = 10000;
+long double Prop1 = 0.5, Prop2 = 0.2;
 
 float payoff[2][2], payoff_2[2][2];
-int strategy[2 * MAX], fitness_value[2 * MAX];
+int strategy[MAX], fitness_value[MAX];
 set<int> G[MAX];
 
 float rand_num() {
@@ -62,8 +66,12 @@ void build_scale_free() {
 
 }
 
-void set_initial_strategy(){
-
+void set_initial_strategy(float cooperator_percent1, float cooperator_percent2) {
+  fill_n(strategy, MAX, 1);
+  for (int i = 0; i < cooperator_percent1 * N; ++i)
+    strategy[i] = 0;
+  for (int i = N; i < cooperator_percent2 * M; ++i)
+    strategy[i] = 0;
 }
 
 void build_network() {
@@ -71,7 +79,7 @@ void build_network() {
   //build_regular_random();
   //build_scale_free(); // Change here the kind of network we want to work with
 
-  set_initial_strategy();
+  set_initial_strategy(Prop1, Prop2);
 }
 
 void simulate_synchronous() {
@@ -91,7 +99,7 @@ int main() {
   srand(time(NULL));
   build_network();
   for (int i = 0; i < N; ++i) {
-    cout << i << ":\n\t";
+    cout << i << ": strategy:" << strategy[i] << "\n";
     for (auto &k :G[i]) {
       cout << k << " ";
     }
