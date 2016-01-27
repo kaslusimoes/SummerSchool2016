@@ -15,7 +15,7 @@ beta = 0.1
 
 p1, p2 = .5, .5
 cc1, cc2 = 0, 0
-r1, r2 = np.zeros(ITERATIONS + 1, dtype=np.int), np.zeros(ITERATIONS + 1, dtype=np.int)
+r1, r2 = np.zeros(ITERATIONS + 1, dtype=np.float), np.zeros(ITERATIONS + 1, dtype=np.float)
 
 payoff = np.array(
         [
@@ -61,9 +61,9 @@ def random():
 def set_initial_strategy(g):
     global cc1, cc2
     coop = range(0, int(p1 * N), 1) + range(N, int(p2 * M) + N, 1)
-    cc1 = len(coop)
+    cc1 += int(p1 * N)
     defect = set(range(0, N + M, 1)) - set(coop)
-    cc2 = len(defect)
+    cc2 += int(p2 * M)
     coop = dict(zip(coop, len(coop) * [0]))
     defect = dict(zip(defect, len(defect) * [1]))
     nx.set_node_attributes(g, 'strategy', coop)
@@ -79,7 +79,6 @@ def fitness(x):
 
 def simulate():
     global cc1, cc2
-    print(cc1, cc2)
     it = 0
     while it < ITERATIONS:
         it += 1
@@ -114,8 +113,8 @@ def simulate():
                         cc2 += 1
                 nx.set_node_attributes(g, 'strategy', { a:g.node[b]['strategy'] })
 
-        r1[it] = cc1 / N
-        r2[it] = cc2 / M
+        r1[it] = float(cc1) / N
+        r2[it] = float(cc2) / M
 
     print('simulation finished')
 
@@ -149,5 +148,5 @@ nx.draw_networkx_labels(g, pos, labels, font_color='w')
 plt.show()
 
 plt.plot(r1, color='r')
-# plt.plot(r2, color='b')
+plt.plot(r2, color='b')
 plt.show()
