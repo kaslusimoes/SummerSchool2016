@@ -12,18 +12,18 @@ import random as rd
 # <codecell>
 
 N = 100
-M = 120
+M = 100
 MAX = N + M + 1
 MAX_EDGE = 1000
 MAX_DEG = 450
-ITERATIONS = 100000
+ITERATIONS = 50000
 S1 = 0.
 T1 = 1.
 S2 = 0.
 T2 = 1.
 beta = 0.1
-NUMGRAPH = 10
-NUMSIM = 10
+NUMGRAPH = 4
+NUMSIM = 1
 
 # <codecell>
 
@@ -182,9 +182,11 @@ Srange = np.linspace(-1,0,nbins)
 mag1 = np.zeros((nbins, nbins), dtype=np.float)
 mag2 = np.zeros((nbins, nbins), dtype=np.float)
 
-for _ in xrange(NUMGRAPH):
+print("FUCK")
+for G in xrange(NUMGRAPH):
     g = random()
     i = 0
+    print("Graph ", G)
     for S1 in Srange:
         S2 = S1
         j = 0
@@ -205,7 +207,7 @@ for _ in xrange(NUMGRAPH):
                 [T2, 0]
             ]
             , dtype=np.float, ndmin=2)
-            for _ in xrange(NUMSIM):
+            for SS in xrange(NUMSIM):
                 set_initial_strategy(g)
                 simulate()
                 
@@ -213,8 +215,11 @@ for _ in xrange(NUMGRAPH):
 #                     print("Std grater than 0.1", T1, S1)
                 mag1[i][j] += np.mean(r1[-1000:])
                 mag2[i][j] += np.mean(r2[-1000:])
+#                 print("\nFinished Simulation {0} on graph {1}".format(SS,G))
+
             j += 1
         i += 1
+    print("Finished Graph {0}".format(G))
 
 mag1 /= (NUMGRAPH*NUMSIM)
 mag2 /= (NUMGRAPH*NUMSIM)
@@ -223,6 +228,7 @@ plt.colorbar()
 plt.title("Population 1")
 plt.xlabel("T")
 plt.ylabel("S")
+savefig("heatmap1.png")
 
 # <codecell>
 
@@ -231,6 +237,7 @@ plt.colorbar()
 plt.title("Population 2")
 plt.xlabel("T")
 plt.ylabel("S")
+savefig("heatmap2.png")
 
 # <codecell>
 
