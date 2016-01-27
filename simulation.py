@@ -22,6 +22,8 @@ T1 = 1.
 S2 = 0.
 T2 = 1.
 beta = 0.1
+NUMGRAPH = 10
+NUMSIM = 10
 
 # <codecell>
 
@@ -180,38 +182,42 @@ Srange = np.linspace(-1,0,nbins)
 mag1 = np.zeros((nbins, nbins), dtype=np.float)
 mag2 = np.zeros((nbins, nbins), dtype=np.float)
 
-i = 0
-for S1 in Srange:
-    S2 = S1
-    j = 0
-    for T1 in Trange:
-        global payoff, payoff2
-        T2 = T1
-        
-        payoff = np.array(
-        [
-            [1, S1],
-            [T1, 0]
-        ]
-        , dtype=np.float, ndmin=2)
-
-        payoff2 = np.array(
-        [
-            [1, S2],
-            [T2, 0]
-        ]
-        , dtype=np.float, ndmin=2)
-        
-        set_initial_strategy(g)
-        simulate()
-        
-        if np.std(r1[-1000:]) > 0.01 or np.std(r2[-1000:]) > 0.01:
-            print("Std grater than 0.1", T1, S1)
-        mag1[i][j] = np.mean(r1[-1000:])
-        mag2[i][j] = np.mean(r2[-1000:])
-        j += 1
-    i += 1
+for _ in xrange(NUMGRAPH):
+    g = random()
+    i = 0
+    for S1 in Srange:
+        S2 = S1
+        j = 0
+        for T1 in Trange:
+            global payoff, payoff2
+            T2 = T1
+            
+            payoff = np.array(
+            [
+                [1, S1],
+                [T1, 0]
+            ]
+            , dtype=np.float, ndmin=2)
     
+            payoff2 = np.array(
+            [
+                [1, S2],
+                [T2, 0]
+            ]
+            , dtype=np.float, ndmin=2)
+            for _ in xrange(NUMSIM):
+                set_initial_strategy(g)
+                simulate()
+                
+#                 if np.std(r1[-1000:]) > 0.01 or np.std(r2[-1000:]) > 0.01:
+#                     print("Std grater than 0.1", T1, S1)
+                mag1[i][j] += np.mean(r1[-1000:])
+                mag2[i][j] += np.mean(r2[-1000:])
+            j += 1
+        i += 1
+
+mag1 /= (NUMGRAPH*NUMSIM)
+mag2 /= (NUMGRAPH*NUMSIM)
 plt.imshow(mag1, extent=[1, 2, -1, 0], aspect="auto", origin="lower")
 plt.colorbar()
 plt.title("Population 1")
