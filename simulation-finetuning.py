@@ -139,6 +139,8 @@ for G in xrange(NUMGRAPH):
     g = random()
     i = 0
     data = Data()
+    mag1 = np.zeros((nbins, nbins), dtype=np.float)
+    mag2 = np.zeros((nbins, nbins), dtype=np.float)
 
     for S1 in Srange:
         S2 = S1
@@ -155,19 +157,21 @@ for G in xrange(NUMGRAPH):
                 [T2, 0]], dtype=np.float, ndmin=2)
         
             for SS in xrange(NSIM):
-                mag1 = np.zeros((nbins, nbins), dtype=np.float)
-                mag2 = np.zeros((nbins, nbins), dtype=np.float)
 
                 set_initial_strategy(g)
                 simulate()
                 
-                mag1[i][j] = np.mean(r1[-1000:])
-                mag2[i][j] = np.mean(r2[-1000:])
-                data.m_list1.append((S1, T1, S2, T2, mag1))
-                data.m_list2.append((S1, T1, S2, T2, mag2))
+                mag1[i][j] += np.mean(r1[-1000:])
+                mag2[i][j] += np.mean(r2[-1000:])
 
             j += 1
         i += 1
+
+    mag1 /= NSIM
+    mag2 /= NSIM
+    
+    data.m_list1.append((S1, T1, S2, T2, mag1))
+    data.m_list2.append((S1, T1, S2, T2, mag2))
     f = open('random graph {1} {0}.grph'.format(G, NAME), 'w')
     dump(data,f,2)
     f.close()
@@ -196,13 +200,17 @@ for S1 in Srange:
             set_initial_strategy(g)
             simulate()
             
-            mag1[i][j] = np.mean(r1[-1000:])
-            mag2[i][j] = np.mean(r2[-1000:])
-            data.m_list1.append((S1, T1, S2, T2, mag1))
-            data.m_list2.append((S1, T1, S2, T2, mag2))
+            mag1[i][j] += np.mean(r1[-1000:])
+            mag2[i][j] += np.mean(r2[-1000:])
 
         j += 1
     i += 1
+
+mag1 /= NSIM
+mag2 /= NSIM
+
+data.m_list1.append((S1, T1, S2, T2, mag1))
+data.m_list2.append((S1, T1, S2, T2, mag2))
 f = open('complete graph {1} {0}.grph'.format(G, NAME), 'w')
 dump(data,f,2)
 f.close()
@@ -221,6 +229,8 @@ for _,_,c in os.walk(p):
 for G, g in sc_graphs:
     i = 0
     data = Data()
+    mag1 = np.zeros((nbins, nbins), dtype=np.float)
+    mag2 = np.zeros((nbins, nbins), dtype=np.float)
 
     for S1 in S1range:
         j = 0
@@ -237,19 +247,21 @@ for G, g in sc_graphs:
                         [T2, 0]], dtype=np.float, ndmin=2)
                 
                     for SS in xrange(NSIM):
-                        mag1 = np.zeros((nbins, nbins), dtype=np.float)
-                        mag2 = np.zeros((nbins, nbins), dtype=np.float)
         
                         set_initial_strategy(g)
                         simulate()
                         
-                        mag1[i][j] = np.mean(r1[-1000:])
-                        mag2[i][j] = np.mean(r2[-1000:])
-                        data.m_list1.append((S1, T1, S2, T2, mag1))
-                        data.m_list2.append((S1, T1, S2, T2, mag2))
+                        mag1[i][j] += np.mean(r1[-1000:])
+                        mag2[i][j] += np.mean(r2[-1000:])
 
             j += 1
         i += 1
+    
+    mag1 /= NSIM
+    mag2 /= NSIM
+
+    data.m_list1.append((S1, T1, S2, T2, mag1))
+    data.m_list2.append((S1, T1, S2, T2, mag2))
     f = open('scalefree graph {1} {0}.grph'.format(G, NAME), 'w')
     dump(data,f,2)
     f.close()
