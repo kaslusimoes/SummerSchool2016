@@ -139,14 +139,14 @@ mag2 = np.zeros((nbins, nbins), dtype=np.float)
 
 for G in xrange(NUMGRAPH):
     g = random()
-    i = 0
     data = Data()
 
     for S1 in S1range:
-        j = 0
         for T1 in T1range:
             global payoff, payoff2
+            i = 0
             for S2 in S2range:
+                j = 0
                 for T2 in T2range:
                     payoff = np.array([
                         [1, S1],
@@ -166,8 +166,8 @@ for G in xrange(NUMGRAPH):
                         mag1[i][j] = np.mean(r1[-1000:])
                         mag2[i][j] = np.mean(r2[-1000:])
 
-            j += 1
-        i += 1
+                j += 1
+            i += 1
 
     mag1 /= NSIM
     mag2 /= NSIM
@@ -181,15 +181,15 @@ for G in xrange(NUMGRAPH):
     print("Finished Random Graph {0}".format(G))
 
 g = complete()
-i = 0
 data = Data()
 mag1 = np.zeros((nbins, nbins), dtype=np.float)
 mag2 = np.zeros((nbins, nbins), dtype=np.float)
 for S1 in S1range:
-    j = 0
     for T1 in T1range:
         global payoff, payoff2
+        i = 0
         for S2 in S2range:
+            j = 0
             for T2 in T2range:
                 payoff = np.array([
                     [1, S1],
@@ -207,8 +207,8 @@ for S1 in S1range:
                     mag1[i][j] += np.mean(r1[-1000:])
                     mag2[i][j] += np.mean(r2[-1000:])
 
-        j += 1
-    i += 1
+            j += 1
+        i += 1
 
 mag1 /= NSIM
 mag2 /= NSIM
@@ -231,16 +231,16 @@ for _,_,c in os.walk(p):
         sc_graphs.append(g)
 
 for G, g in sc_graphs:
-    i = 0
     data = Data()
     mag1 = np.zeros((nbins, nbins), dtype=np.float)
     mag2 = np.zeros((nbins, nbins), dtype=np.float)
 
     for S1 in S1range:
-        j = 0
         for T1 in T1range:
             global payoff, payoff2
+            i = 0
             for S2 in S2range:
+                j = 0
                 for T2 in T2range:
                     payoff = np.array([
                         [1, S1],
@@ -258,8 +258,8 @@ for G, g in sc_graphs:
                         mag1[i][j] += np.mean(r1[-1000:])
                         mag2[i][j] += np.mean(r2[-1000:])
 
-            j += 1
-        i += 1
+                j += 1
+            i += 1
 
     mag1 /= NSIM
     mag2 /= NSIM
