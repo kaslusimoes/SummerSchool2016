@@ -145,13 +145,12 @@ for G in xrange(NUMGRAPH):
         for T1 in T1range:
             global payoff, payoff2
             i = 0
+            payoff = np.array([
+                [1, S1],
+                [T1, 0]], dtype=np.float, ndmin=2)
             for S2 in S2range:
                 j = 0
                 for T2 in T2range:
-                    payoff = np.array([
-                        [1, S1],
-                        [T1, 0]], dtype=np.float, ndmin=2)
-            
                     payoff2 = np.array([
                         [1, S2],
                         [T2, 0]], dtype=np.float, ndmin=2)
@@ -188,13 +187,12 @@ for S1 in S1range:
     for T1 in T1range:
         global payoff, payoff2
         i = 0
+        payoff = np.array([
+            [1, S1],
+            [T1, 0]], dtype=np.float, ndmin=2)
         for S2 in S2range:
             j = 0
             for T2 in T2range:
-                payoff = np.array([
-                    [1, S1],
-                    [T1, 0]], dtype=np.float, ndmin=2)
-        
                 payoff2 = np.array([
                     [1, S2],
                     [T2, 0]], dtype=np.float, ndmin=2)
@@ -239,13 +237,12 @@ for G, g in sc_graphs:
         for T1 in T1range:
             global payoff, payoff2
             i = 0
+            payoff = np.array([
+                [1, S1],
+                [T1, 0]], dtype=np.float, ndmin=2)
             for S2 in S2range:
                 j = 0
                 for T2 in T2range:
-                    payoff = np.array([
-                        [1, S1],
-                        [T1, 0]], dtype=np.float, ndmin=2)
-            
                     payoff2 = np.array([
                         [1, S2],
                         [T2, 0]], dtype=np.float, ndmin=2)
