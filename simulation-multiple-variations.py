@@ -213,49 +213,49 @@ f.close()
 
 print("Finished Complete Graph")
 
-# p = './graphs/'
-# sc_graphs = []
-# for _,_,c in os.walk(p):
-#     for a,x in enumerate(c):
-#         pp = os.path.join(p,x)
-#         f = open(pp, 'r')
-#         g = load(f)
-#         sc_graphs.append(g)
+p = './graphs/'
+sc_graphs = []
+for _,_,c in os.walk(p):
+    for a,x in enumerate(c):
+        pp = os.path.join(p,x)
+        f = open(pp, 'r')
+        g = load(f)
+        sc_graphs.append(g)
 
-# for G, g in sc_graphs:
-#     i = 0
-#     data = Data()
+for G, g in sc_graphs:
+    i = 0
+    data = Data()
 
-#     for S1 in S1range:
-#         j = 0
-#         for T1 in T1range:
-#             global payoff, payoff2
-#             for S2 in S2range:
-#                 for T2 in T2range:
-#                     payoff = np.array([
-#                         [1, S1],
-#                         [T1, 0]], dtype=np.float, ndmin=2)
+    for S1 in S1range:
+        j = 0
+        for T1 in T1range:
+            global payoff, payoff2
+            for S2 in S2range:
+                for T2 in T2range:
+                    payoff = np.array([
+                        [1, S1],
+                        [T1, 0]], dtype=np.float, ndmin=2)
             
-#                     payoff2 = np.array([
-#                         [1, S2],
-#                         [T2, 0]], dtype=np.float, ndmin=2)
+                    payoff2 = np.array([
+                        [1, S2],
+                        [T2, 0]], dtype=np.float, ndmin=2)
                 
-#                     for SS in xrange(NSIM):
-#                         mag1 = np.zeros((nbins, nbins), dtype=np.float)
-#                         mag2 = np.zeros((nbins, nbins), dtype=np.float)
+                    for SS in xrange(NSIM):
+                        mag1 = np.zeros((nbins, nbins), dtype=np.float)
+                        mag2 = np.zeros((nbins, nbins), dtype=np.float)
         
-#                         set_initial_strategy(g)
-#                         simulate()
+                        set_initial_strategy(g)
+                        simulate()
                         
-#                         mag1[i][j] = np.mean(r1[-1000:])
-#                         mag2[i][j] = np.mean(r2[-1000:])
-#                         data.m_list1.append((S1, T1, S2, T2, mag1))
-#                         data.m_list2.append((S1, T1, S2, T2, mag2))
+                        mag1[i][j] = np.mean(r1[-1000:])
+                        mag2[i][j] = np.mean(r2[-1000:])
+                        data.m_list1.append((S1, T1, S2, T2, mag1))
+                        data.m_list2.append((S1, T1, S2, T2, mag2))
 
-#             j += 1
-#         i += 1
-#     f = open('scalefree graph {1} {0}.grph'.format(G, NAME), 'w')
-#     dump(data,f,2)
-#     f.close()
+            j += 1
+        i += 1
+    f = open('scalefree graph {1} {0}.grph'.format(G, NAME), 'w')
+    dump(data,f,2)
+    f.close()
     
-#     print("Finished Graph {0}".format(G))
+    print("Finished Graph {0}".format(G))
