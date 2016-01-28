@@ -144,6 +144,8 @@ for G in xrange(NUMGRAPH):
     for S1 in S1range:
         for T1 in T1range:
             global payoff, payoff2
+            mag1 = np.zeros((nbins, nbins), dtype=np.float)
+            mag2 = np.zeros((nbins, nbins), dtype=np.float)
             i = 0
             payoff = np.array([
                 [1, S1],
@@ -156,9 +158,6 @@ for G in xrange(NUMGRAPH):
                         [T2, 0]], dtype=np.float, ndmin=2)
                 
                     for SS in xrange(NSIM):
-                        mag1 = np.zeros((nbins, nbins), dtype=np.float)
-                        mag2 = np.zeros((nbins, nbins), dtype=np.float)
-        
                         set_initial_strategy(g)
                         simulate()
                         
@@ -198,7 +197,6 @@ for S1 in S1range:
                     [T2, 0]], dtype=np.float, ndmin=2)
             
                 for SS in xrange(NSIM):
-    
                     set_initial_strategy(g)
                     simulate()
                     
